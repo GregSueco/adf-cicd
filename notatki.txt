@@ -1,0 +1,60 @@
+1. Databricks PYSpark i Spark SQL
+2. Azure Key Vault
+3. Spark Core - contains basic information, responsible for rdd and managing stuff. Provides RDD APIs for manipulating RDD. Used in v1 
+4. Spark SQL Engine - used in v2 - provides High Level APis. Comes with own resource manager (can use YARN,Kubernetes instead,Apache Mesos)
+5. Control Plane (Databricks subscription) - databricks ux + cluster manager + dbfs  + metadata about cluster
+6. Data Plane (Customer subscription) - vnet(+nsg) + databricks workspace + blob storage
+7. Cluster - collection of virtual machines. Driver node (orchestrate node) + worker nodes. Each Node(vm) has normally >- 4 cores
+	Driver node - drives the process on jvm, created spark context, does not peform computation,communicates with cluster manager on allocation of resources(identify jobs, stages etc. for paralelization) through driver program
+	Worker node - normally runs executor jvm, in standard spark can be more than one executor on each node, however dbs restricks it to only one executor per node. Executor do all the processing + read/write to external data sources.  	Each executor has a number of slots - one per core (so min 4 per worker node). Slot is a place to execute task got from driver node.
+	Driver node decomposition - whenever you ran a command in dbs notebook or submit a request outside of spark(e.g. throught adf) it is executed as a application on driver -> driver decomposes it into jobs and jobs are divided into 	
+	individual stagers. Each stage divideded into tasks which is the lowest level of execution. Trying to get as much paralization - depends on how data can be distributed and partitioned across a cluster plus how stages can be 	paralilized. 
+	Scaling clusters - either vertical (adding cores to executors which has its maxes) or horizonal scaling (adding worker nodes).
+
+
+8. All purpose cluster - created manually - persistent - interactive workloads-can be shared bu users-expensive, job cluster - created by jobs - terminated at the end of jobs-automated workloads-isolated for jobs-cheap- good for repeated production workloads
+9.pools - give avalability to have some resource avaialble withouth waiting several minutes to spin up a cluster
+10. Types of clusters: 
+	standard - single user,no process isolation,no task preemption (wywlaszczenie,priorytezacja), good for prod and ad hoc dev
+ 	high concurrency - multiple users, process isolation,task preemption, NO SUPPORT FOR SCALA,good for interactive analysis and adhoc dev
+	single node - single user, no process isolation,no task preemmption,good for light weight workload for ML&data analysis
+
+11. Databricks Runtime - set of cre libraries running on clusters. Type:
+	DB runtime - optimized Spark, Scala,Java,Python,R Ubuntu Libraries,GPU Libraies, Delta Lake, other DB services
+	DB runtime ML - DB runtime + popular ML libraries (PYTorch,Keras,Tensoflow,XBBoost)
+	DB runtime genomics - DB runtime + genomic libraries (GLOW,ADAM) and pipileings (DNASeq,RNASeq)
+ 	DB runtime light - good for jobs not requiring advanced featues like autoscale or reliability, automated workloads only - not for adhoc or interavtice or notebook jobs
+12. Autoermination - terminates after x minutes of inactivity (default 120 minutes in single and standard, high concurrency dont have it set by default, 10 and 10k range)
+13. Autoscale - specify min and max work nodes, for good for streaming, good if not sure on workload or than may vary depending on execution
+14. VM typy of cluster 
+	memory optimized - memory intensive apps e.g. ml workload with a let of cache used
+	compute optimized - good for structured streaming where processing is enough for input during peaks, good for ds and distributed analytics as well
+	storage optimized - whenerver ther is a need for high i/o and disk throughput
+	general purpose - analytics with in memory caching and enterprise grade apps
+	gpu purpose - deep learning that are data and compute intensive
+
+15. Databricks utilities - combine tasks in single notebook, file with etl task, can be run in python,r or scala but not sql
+	file system utilites - e.g. allows access dbfs from notebook
+	notebook workflow utilites - invoke notebook from antoher and chain
+	widget utilites - paramterize notebook so antoher notebook or adf can pass parameter
+	secret utilites - get secret values stored in secret scoped either backed by azure key vault or dbs
+	library utilities -allows install python libraries and create enviromens scoped to notebbok seccions ( it is recommended to use %pip magic commands instead).
+
+16.Service Principal - security identity used by user created apps,services and automation tools to access specific Azure resources. Azure Active Directory -> App registrations -> New registration -> Azure resource (e.g. Blob storage)->
+-> Access Control (IAM) -> Rolse assignment to newly created Service Principal
+
+17 Secrets -> secret scopes help to store credentials and reference them in notebooks and jobs. Two types: 
+	Databricks backed -> secred backed in dbs backed encrypted database. Can be used trhourgh db CLI or API (not graphical interface)
+	and Azure backed through Azure Key Vault -> recommended when using databricks on Azure since seccrets stored in Key vault can be refenced by other services in Azure. TO use with databricks we need to do the following:
+		create azure key vaykt
+			create secrets in azure key vault
+				create secret scopt in databaricks and link it to secrets stored in azure key vault through notebook -> dbutils.secrets.get
+ 					
+18. Spark dataframes -> when spark reads data, it reads it into dataframes. Dataframe can be represented an rows and datatypes, and can be divided into logical partitions than can be computed by different executors or slots. to paralize.
+19. Spark provides data sources API - dataframe reader methods to read data from cvs,json,parquet etc.
+20. Dataframe API for transformations - dataframe API (joining,sorting,window function,aggregation etc.).
+21. Dataframe API - dataframe writer methods - allows to write to various formats (json,parquet,orc etc.) -> data lands in data sink
+22. DataFrame API <> Data ources API
+23. A DataFrame is a data structure that organizes data into a 2-dimensional table of rows and columns, much like a spreadsheet. ... Every DataFrame contains a blueprint, known as a schema, that defines the name and data type of each column
+
+24. PySpark is an interface for Apache Spark in Python. It not only allows you to write Spark applications using Python APIs, but also provides the PySpark shell for interactively analyzing your data in a distributed environment. PySpark     supports most of Spark’s features such as Spark SQL, DataFrame, Streaming, MLlib (Machine Learning) and Spark Core.
