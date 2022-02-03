@@ -58,3 +58,5 @@
 23. A DataFrame is a data structure that organizes data into a 2-dimensional table of rows and columns, much like a spreadsheet. ... Every DataFrame contains a blueprint, known as a schema, that defines the name and data type of each column
 
 24. PySpark is an interface for Apache Spark in Python. It not only allows you to write Spark applications using Python APIs, but also provides the PySpark shell for interactively analyzing your data in a distributed environment. PySpark     supports most of Spark’s features such as Spark SQL, DataFrame, Streaming, MLlib (Machine Learning) and Spark Core.
+
+25 github test
