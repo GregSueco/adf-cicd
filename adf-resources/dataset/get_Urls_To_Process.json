@@ -1,0 +1,17 @@
+{
+	"name": "get_Urls_To_Process",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_covid_adf_srv_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ski0219",
+			"table": "vw_PRTGUrlConfig"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

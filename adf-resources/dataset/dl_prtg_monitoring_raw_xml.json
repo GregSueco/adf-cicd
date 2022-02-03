@@ -1,0 +1,43 @@
+{
+	"name": "dl_prtg_monitoring_raw_xml",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ingest_prtg_raw_data_https",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"username": {
+				"type": "string",
+				"defaultValue": "ski"
+			},
+			"passhash": {
+				"type": "string",
+				"defaultValue": "1406849539"
+			},
+			"sdate": {
+				"type": "string",
+				"defaultValue": "2021-12-01-00-00-00"
+			},
+			"edate": {
+				"type": "string",
+				"defaultValue": "2022-01-01-00-00-00"
+			},
+			"app_id": {
+				"type": "string",
+				"defaultValue": "3354"
+			}
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@concat('api/historicdata.xml?id=',dataset().app_id,'&avg=300&sdate=',dataset().sdate,'&edate=',dataset().edate,'&username=',dataset().username,'&passhash=',dataset().passhash)",
+					"type": "Expression"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "gs-adf-training",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "35e2328a-c632-429f-8598-0371afb6b1a9",
+		"tenantId": "1e2ad6d6-274f-43e8-89ef-d36d65bb83b5"
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"name": "ds_prtg_monitor_raw_xml",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ingest_prtg_raw_data_https",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"relativeUrl": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().relativeUrl",
+					"type": "Expression"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

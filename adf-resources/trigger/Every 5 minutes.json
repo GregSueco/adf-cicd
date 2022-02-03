@@ -1,0 +1,24 @@
+{
+	"name": "Every 5 minutes",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_ingest_population_data_from_input",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2022-01-06T11:42:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

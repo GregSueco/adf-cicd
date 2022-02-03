@@ -1,0 +1,29 @@
+{
+	"name": "ds_prtg_monitoring_binary",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adl_covidreportingsadl",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string",
+				"defaultValue": "prtg"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": "processed",
+				"fileSystem": "prtg"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
