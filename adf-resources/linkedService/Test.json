@@ -1,0 +1,13 @@
+{
+	"name": "Test",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-8429324566549427.7.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/b35a9faf-761c-4e46-a524-4986f1c63028/resourceGroups/GS_DatabricksTraining/providers/Microsoft.Databricks/workspaces/GSZ_DatabricksWorkspace",
+			"existingClusterId": "0117-130148-ophver3h"
+		}
+	}
+}
